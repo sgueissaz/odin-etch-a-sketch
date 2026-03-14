@@ -133,6 +133,7 @@ ui.grid.addEventListener('pointermove', (e) => {
 
     drawSquare(e.target.id);
     drawSquareUI(e.target.id);
+    e.preventDefault();
 });
 
 ui.html.addEventListener('pointerup', (e) => {
