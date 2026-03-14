@@ -1,0 +1,39 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100vh;
+    background-color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid {
+    width: 90vmin;
+    height: 90vmin;
+    aspect-ratio: 1;
+
+    margin: 0;
+    border: 3px solid black;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+.row {
+    display: flex;
+}
+
+.square {
+    flex: 1;
+    aspect-ratio: 1;
+}
+
+.black {
+    background-color: black;
+    color: white;
+}
