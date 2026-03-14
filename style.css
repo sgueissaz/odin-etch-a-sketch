@@ -11,6 +11,14 @@ html {
     align-items: center;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
 .grid {
     width: 90vmin;
     height: 90vmin;
@@ -23,7 +31,6 @@ html {
     flex-direction: column;
 }
 
-
 .row {
     display: flex;
 }
@@ -31,9 +38,4 @@ html {
 .square {
     flex: 1;
     aspect-ratio: 1;
-}
-
-.black {
-    background-color: black;
-    color: white;
 }
