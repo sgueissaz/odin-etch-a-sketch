@@ -120,10 +120,9 @@ ui.start.addEventListener('click', () => {
     initGridUI();
 })
 
-ui.html.addEventListener('pointerdown', (e) => {
-    toggleDrawing();
+ui.grid.addEventListener('pointerdown', (e) => {
+    state.isDrawing = true;
     setRandomColor();
-    e.preventDefault();
 });
 
 ui.grid.addEventListener('pointermove', (e) => {
@@ -133,10 +132,16 @@ ui.grid.addEventListener('pointermove', (e) => {
 
     drawSquare(e.target.id);
     drawSquareUI(e.target.id);
-    e.preventDefault();
 });
 
-ui.html.addEventListener('pointerup', (e) => {
-    toggleDrawing();
-    e.preventDefault();
+ui.grid.addEventListener('pointerup', (e) => {
+    state.isDrawing = false;
+});
+
+ui.grid.addEventListener("pointerleave", (e) => {
+    state.isDrawing = false;
+});
+
+ui.grid.addEventListener("pointercancel", (e) => {
+    state.isDrawing = false;
 });
