@@ -1,7 +1,20 @@
-const SIZE_GRID = 64;
+const ONLY_NUMBER = /^[0-9]+$/;
 
 const state = {
+    sizeGrid: 0,
     isDrawing: false
+};
+
+function getSizeGrid() {
+    let sizeGrid = 0;
+    do {
+        response = prompt("Choose the size of the grid! (Max 100)");
+        if (!ONLY_NUMBER.test(response)) {
+            continue;
+        }
+        sizeGrid = parseInt(response);
+    } while (sizeGrid < 1 || sizeGrid > 100);
+    return sizeGrid;
 }
 
 const ui = {
@@ -14,12 +27,12 @@ function paintSquare(squareId) {
     ui.squares.get(squareId).classList.add('black');
 }
 
-function initGrid() {
-    for (let i = 0; i < SIZE_GRID; i++) {
+function initGrid(sizeGrid) {
+    for (let i = 0; i < sizeGrid; i++) {
         const rowElement = document.createElement('div');
         rowElement.classList.add('row');
         
-        for (let j = 0; j < SIZE_GRID; j++) {
+        for (let j = 0; j < sizeGrid; j++) {
             const squareElement = document.createElement('div');
             squareElement.id = `square-${i}-${j}`;
             squareElement.classList.add('square');
@@ -47,4 +60,5 @@ ui.html.addEventListener('pointerup', (e) => {
     e.preventDefault();
 });
 
-initGrid();
+state.sizeGrid = getSizeGrid();
+initGrid(state.sizeGrid);
