@@ -70,13 +70,11 @@ function drawSquare(squareId) {
 const ui = {
     html: document.querySelector('html'),
     start: document.querySelector('#start'),
-    grid: document.querySelector('.grid'),
-    squares: new Map()
+    grid: document.querySelector('.grid')
 };
 
 function initGridUI() {
     ui.grid.innerHTML = '';
-    ui.squares = new Map();
 
     for (let i = 0; i < state.sizeGrid; i++) {
         const rowElement = document.createElement('div');
@@ -88,7 +86,6 @@ function initGridUI() {
             squareElement.classList.add('square');
 
             rowElement.appendChild(squareElement);
-            ui.squares.set(squareElement.id, squareElement);
         }
 
         ui.grid.appendChild(rowElement);
@@ -99,19 +96,14 @@ function getColorCSS(color) {
     return `rgb(${color.red}, ${color.green}, ${color.blue})`;
 }
 
-function drawSquareUI(squareId) {
-    const square = state.squares.get(squareId);
+function drawSquareUI(squareElement) {
+    const square = state.squares.get(squareElement.id);
     if (square === undefined) {
         return;
     }
 
-    const squareUI = ui.squares.get(squareId);
-    if (squareUI === undefined) {
-        return;
-    }
-
-    squareUI.style.opacity = square.opacity;
-    squareUI.style.backgroundColor = getColorCSS(square.color);
+    squareElement.style.opacity = square.opacity;
+    squareElement.style.backgroundColor = getColorCSS(square.color);
 }
 
 ui.start.addEventListener('click', () => {
@@ -121,6 +113,7 @@ ui.start.addEventListener('click', () => {
 })
 
 ui.grid.addEventListener('pointerdown', (e) => {
+    ui.grid.setPointerCapture(e.pointerId);
     state.isDrawing = true;
     setRandomColor();
 });
@@ -130,18 +123,15 @@ ui.grid.addEventListener('pointermove', (e) => {
         return;
     }
 
-    drawSquare(e.target.id);
-    drawSquareUI(e.target.id);
+    const squareElement = document.elementFromPoint(e.clientX, e.clientY);
+    if (squareElement && squareElement.classList.contains("square")) {
+        drawSquare(squareElement.id);
+        drawSquareUI(squareElement);
+    }
 });
 
-ui.grid.addEventListener('pointerup', (e) => {
-    state.isDrawing = false;
-});
+ui.grid.addEventListener('pointerup', () => state.isDrawing = false);
 
-ui.grid.addEventListener("pointerleave", (e) => {
-    state.isDrawing = false;
-});
+ui.grid.addEventListener("pointerleave", () => state.isDrawing = false);
 
-ui.grid.addEventListener("pointercancel", (e) => {
-    state.isDrawing = false;
-});
+ui.grid.addEventListener("pointercancel", () => state.isDrawing = false);
